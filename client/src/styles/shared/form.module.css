@@ -1,0 +1,24 @@
+.columnForm {
+  display: flex;
+  flex-direction: column;
+}
+
+.columnFormControl {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: 5px;
+  align-items: start;
+}
+
+.columnFormControlLabel {
+  margin-bottom: 5px;
+  display: block;
+}
+
+.formControlLabelSpan {
+  font-size: 14px;
+}
+
+.smallFormControl {
+  height: 30px;
+}

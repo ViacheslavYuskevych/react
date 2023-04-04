@@ -1,0 +1,68 @@
+.layer {
+  position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  left: 0;
+  top: 0;
+  width: 100vw;
+  height: 100vh;
+}
+
+.backdrop {
+  composes: layer;
+  background-color: deepskyblue;
+  z-index: 1000;
+  opacity: 0.5;
+}
+
+.container {
+  composes: layer;
+  padding: 15px;
+  z-index: 1001;
+}
+
+.modal {
+  max-width: 100%;
+  max-height: 100%;
+  width: 500px;
+  border: 2px solid black;
+  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  background-color: beige;
+}
+
+.formModal {
+  width: 300px;
+}
+
+.header {
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: navy;
+  color: beige;
+  border-bottom: 2px solid black;
+}
+
+.headerTitle {
+  margin: 0;
+  font-size: 15px;
+}
+
+.headerCloseBtn {
+  cursor: pointer;
+}
+
+.body {
+  padding: 5px;
+  overflow: auto;
+}
+
+.footer {
+  border-top: 2px solid black;
+  padding: 5px;
+  display: flex;
+  align-items: center;
+  justify-content: start;
+}

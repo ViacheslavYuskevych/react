@@ -1,0 +1,86 @@
+.list {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+}
+
+.listItem {
+  display: block;
+  padding: 10px;
+}
+
+.card {
+  width: 400px;
+  height: 160px;
+  display: flex;
+  flex-direction: column;
+  border: 2px solid black;
+}
+
+.header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: navy;
+  color: beige;
+  padding: 5px;
+}
+
+.headerTitle {
+  font-weight: bold;
+  font-size: 16px;
+  max-width: 100%;
+  text-overflow: ellipsis;
+  overflow: hidden;
+  white-space: nowrap;
+  display: block;
+}
+
+.body {
+  padding: 10px;
+  background-color: beige;
+  color: black;
+  flex: 1;
+  overflow: auto;
+  border-top: 2px solid black;
+  border-bottom: 2px solid black;
+}
+
+.bodyText {
+  font-size: 14px;
+  margin: 0;
+}
+
+.footer {
+  display: flex;
+  align-items: center;
+  background-color: beige;
+  padding: 5px;
+}
+
+.addBtn {
+  position: fixed;
+  right: 20px;
+  bottom: 20px;
+  z-index: 2;
+  cursor: pointer;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+
+.addForm {
+  composes: columnForm from './shared/form.module.css';
+}
+
+.addFormControl {
+  composes: columnFormControl from './shared/form.module.css';
+}
+
+.addFormControlLabel {
+  composes: columnFormControlLabel from './shared/form.module.css';
+}
+
+.addFormControlLabelSpan {
+  composes: formControlLabelSpan from './shared/form.module.css';
+}
