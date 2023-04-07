@@ -3,6 +3,8 @@ import styles from '../../styles/todo.module.css';
 import AddTodoBtn from './AddBtn';
 import useTodoList from '../../hooks/useTodoList';
 import TodoFilter, { IProps as ITodoFilterProps } from './Filter';
+import { memo } from 'react';
+import { useAppSelector } from '../../hooks/redux';
 
 function TodoList() {
   console.log('TodoList render');
@@ -12,14 +14,17 @@ function TodoList() {
     onEdit,
     onRemove,
     onToggleStatus,
-    todoList,
     search,
     setSearch,
     setSort,
     sort,
+  } = useTodoList();
+
+  const {
     error,
     isLoading,
-  } = useTodoList();
+    list: todoList,
+  } = useAppSelector((state) => state.todo);
 
   const todoListFilterProps: ITodoFilterProps = {
     search,
@@ -32,12 +37,12 @@ function TodoList() {
     <div className='w-100'>
       {error && <span>{error}</span>}
 
+      <TodoFilter {...todoListFilterProps}></TodoFilter>
+
       {isLoading ? (
         'LOADING....'
       ) : (
         <>
-          <TodoFilter {...todoListFilterProps}></TodoFilter>
-
           <div className={styles.list}>
             {todoList.map((todo) => (
               <div className={styles.listItem} key={todo.id}>
@@ -59,4 +64,4 @@ function TodoList() {
   );
 }
 
-export default TodoList;
+export default memo(TodoList);

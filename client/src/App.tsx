@@ -1,4 +1,3 @@
-import { useEffect } from 'react';
 import Header from './layouts/Header';
 import Main from './layouts/Main';
 
@@ -6,10 +5,6 @@ import Main from './layouts/Main';
 import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
-  useEffect(() => {
-    console.log('!!!!!!!!! App useEffect');
-  }, []);
-
   return (
     <>
       <Header></Header>

@@ -6,6 +6,14 @@ import { IFormValue } from '../pages/components/AddForm';
 import { SortEnum } from '../pages/components/Filter';
 import { ITodo } from '../models/todo';
 import TodoApi from '../services/todo-api';
+import { useAppDispatch } from './redux';
+import { todoSlice } from '../redux/reducers/todo';
+import {
+  addTodo,
+  fetchTodoList,
+  removeTodo,
+  toggleTodo,
+} from '../redux/actions/todo/fetch';
 
 const useTodoList = (): IUseTodoListResponse => {
   const [todoList, setTodoList] = useState<ITodo[]>([]);
@@ -14,7 +22,11 @@ const useTodoList = (): IUseTodoListResponse => {
   const [isLoading, setLoading] = useState(false);
   const [error, setError] = useState<string>('');
 
-  useFetchTodoList({ setError, setLoading, setTodoList });
+  const dispatch = useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchTodoList());
+  }, []);
 
   console.log('useTodoList hook');
 
@@ -25,54 +37,20 @@ const useTodoList = (): IUseTodoListResponse => {
     todoList: filteredTodoList,
   });
 
-  const onRemove = async ({ id }: ITodo) => {
-    setLoading(true);
-
-    try {
-      await TodoApi.remove(id);
-
-      setTodoList(todoList.filter((todo) => todo.id !== id));
-    } catch (error: any) {
-      setError(error?.message);
-    } finally {
-      setLoading(false);
-    }
+  const onRemove = (todo: ITodo) => {
+    dispatch(removeTodo(todo));
   };
 
   const onEdit = (todo: ITodo) => {
     /* TODO */
   };
 
-  const onToggleStatus = async ({ id, isDone }: ITodo) => {
-    setLoading(true);
-
-    try {
-      await TodoApi.update(id, { isDone });
-
-      setTodoList(
-        todoList.map((todo) =>
-          todo.id === id ? { ...todo, isDone: !isDone } : todo
-        )
-      );
-    } catch (error: any) {
-      setError(error?.message);
-    } finally {
-      setLoading(false);
-    }
+  const onToggleStatus = async (todo: ITodo) => {
+    dispatch(toggleTodo(todo));
   };
 
-  const onAdd = async (dto: IFormValue) => {
-    setLoading(true);
-
-    try {
-      const { data: todo } = await TodoApi.add(dto);
-
-      setTodoList([...todoList, todo]);
-    } catch (error: any) {
-      setError(error?.message);
-    } finally {
-      setLoading(false);
-    }
+  const onAdd = (dto: IFormValue) => {
+    dispatch(addTodo(dto));
   };
 
   return {
@@ -132,36 +110,6 @@ const useTodoListSort = ({
   }, [todoList, sort]);
 };
 
-const useFetchTodoList = ({
-  setLoading,
-  setError,
-  setTodoList,
-}: {
-  setLoading: (isLoading: boolean) => void;
-  setError: (error: string) => void;
-  setTodoList: (todoList: ITodo[]) => void;
-}) => {
-  const fetch = async () => {
-    console.log('useFetchTodoList ');
-
-    try {
-      const { data: todoList } = await TodoApi.get();
-
-      setTodoList(todoList);
-    } catch (error: any) {
-      setError(error?.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-  useEffect(() => {
-    setLoading(true);
-
-    fetch();
-  }, []);
-};
-
 export default useTodoList;
 
 interface IUseTodoListResponse {
@@ -177,25 +125,3 @@ interface IUseTodoListResponse {
   isLoading: boolean;
   error: string;
 }
-
-const MOCK_TODO_LIST: ITodo[] = [
-  {
-    id: uuidv4(),
-    title: 'Move to Thailand',
-    description: 'Move with all family to Thailand and spend there fun time.',
-    isDone: true,
-  },
-  {
-    id: uuidv4(),
-    title: 'Find new project',
-    description: 'Find new project or company to raise job compensation.',
-    isDone: false,
-  },
-  {
-    id: uuidv4(),
-    title:
-      'Item to deleteItem to delete Item to delete Item to delete Item to delete',
-    description: 'Find new project or company to raise job compensation.',
-    isDone: false,
-  },
-];

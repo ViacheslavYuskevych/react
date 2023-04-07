@@ -1,4 +1,4 @@
-import { SyntheticEvent } from 'react';
+import { SyntheticEvent, memo } from 'react';
 
 import sharedStyles from '../../styles/shared/form.module.css';
 import filterStyles from '../../styles/filter.module.css';
@@ -10,6 +10,8 @@ export enum SortEnum {
 }
 
 function TodoFilter({ search, setSearch, setSort, sort }: IProps) {
+  console.log('!!!!!!!!1 TodoFilter render');
+
   const onSearch = ({ target }: SyntheticEvent) => {
     const { value } = target as HTMLInputElement;
 
@@ -73,7 +75,7 @@ function TodoFilter({ search, setSearch, setSort, sort }: IProps) {
   );
 }
 
-export default TodoFilter;
+export default memo(TodoFilter);
 
 export interface IProps {
   search: string;

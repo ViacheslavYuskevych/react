@@ -1,4 +1,5 @@
 import { IconContext } from 'react-icons';
+import { memo } from 'react';
 import { MdAccessTime, MdDoneOutline } from 'react-icons/md';
 
 import { ITodo } from '../../models/todo';
